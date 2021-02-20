@@ -38,10 +38,8 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-# Configure Joplin by importing a JSON configuration file from a mounted volume
-# (updated entrypoint script performs "joplin config --import-file $JOPLIN_CONFIG_JSON")
-ENV JOPLIN_CONFIG_JSON=/secrets/joplin-config.json
-VOLUME /secrets
+# Default Joplin configuration location is a Docker secret called "joplin-config.json"
+ENV JOPLIN_CONFIG_JSON=/run/secrets/joplin-config.json
 
 # Joplin config directory can be mounted for persistence of config and database
 RUN mkdir -p /home/node/.config/joplin && chown node:node /home/node/.config/joplin
